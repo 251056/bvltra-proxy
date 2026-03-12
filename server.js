@@ -34,7 +34,7 @@ app.get('/api/search-food', async (req, res) => {
     const token = req.headers.authorization;
 
     try {
-        const searchUrl = `https://platform.fatsecret.com/rest/foods/search/v2?search_expression=${encodeURIComponent(searchQuery)}&format=json&max_results=5`;
+        const searchUrl = `https://platform.fatsecret.com/rest/foods/search/v1?search_expression=${encodeURIComponent(searchQuery)}&format=json&max_results=5`;
         
         // The Proxy asks FatSecret securely
         const response = await fetch(searchUrl, {
