@@ -58,3 +58,28 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`BVLTRA Proxy Engine running on port ${PORT}`);
 });
+
+// ROUTE 3: The Deep Dive (Gets full nutrient profile by ID)
+app.get('/api/get-food', async (req, res) => {
+    const foodId = req.query.id;
+    const token = req.headers.authorization;
+
+    try {
+        // We use the singular 'food/v1' endpoint here
+        const url = `https://platform.fatsecret.com/rest/food/v1?food_id=${foodId}&format=json`;
+        
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': token 
+            }
+        });
+
+        const data = await response.json();
+        res.json(data);
+
+    } catch (error) {
+        console.error("Deep Dive Error:", error);
+        res.status(500).json({ error: 'Failed to fetch detailed food data' });
+    }
+});
